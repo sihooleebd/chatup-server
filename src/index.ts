@@ -14,7 +14,7 @@ import ChatServer from './chat-server';
 import corsConfig from './config/cors';
 
 const app = express();
-const port = 8080;
+const port = 8081;
 
 const upload = multer({dest:'../storage/temp/'});
 
