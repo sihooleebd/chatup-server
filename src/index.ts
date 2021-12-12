@@ -16,7 +16,7 @@ import corsConfig from './config/cors';
 const app = express();
 const port = 8080;
 
-const upload = multer({dest:'../blog-client/dist/storage/temp/'});
+const upload = multer({dest:'../storage/temp/'});
 
 app.use(cookieParser());
 app.use(express.json());
