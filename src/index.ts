@@ -53,6 +53,7 @@ app.post('/api/signIn', (req, res) => {
 // app.post('/api/newPost', (req, res) => {
 app.get('/', (r, re) => {
   re.send('dont get directly!');
+  console.log('sombody tried to access directly');
 });
 
 app.get('/api/posts', (req, res) => {
