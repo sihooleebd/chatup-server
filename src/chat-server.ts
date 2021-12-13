@@ -5,7 +5,6 @@ import MyResponse from './my-response';
 import Db from './utils/db';
 
 export default class ChatServer {
-
   httpServer: http.Server;
   socketIoServer: Server;
 
@@ -78,6 +77,7 @@ export default class ChatServer {
   }
 
   run(): void {
-    this.httpServer.listen(8081);
+    const port = 8082;
+    this.httpServer.listen(port);
   }
 }
