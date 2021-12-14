@@ -25,6 +25,9 @@ app.use(
   cors(corsConfig),
 );
 
+app.use('/file', express.static('../storage'));
+
+
 app.post('/api/signUp', (req, res) => {
   const user = new User();
   const email = req.body.email || '';
