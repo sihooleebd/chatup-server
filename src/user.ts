@@ -39,7 +39,7 @@ export default class User {
     try {
       const result = await connection.query(queryStr, values);
       if(profileImageFileName) {
-        fs.rename(`../blog-client/dist/storage/temp/${profileImageFileName}`,`../blog-client/dist/storage/profile/${profileImageFileName}`, function(err) {
+        fs.rename(`../storage/temp/${profileImageFileName}`,`../storage/profile/${profileImageFileName}`, function(err) {
           if(err) {
             console.log(err);
           }
