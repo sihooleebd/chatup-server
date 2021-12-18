@@ -3,6 +3,7 @@ import Db from './utils/db';
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
 import { MAX_FEED_LEN } from './config/spec';
+import Database from './utils/database';
 
 export default class Post {
 
@@ -17,7 +18,7 @@ export default class Post {
   async createPost(title: string, content: string, roomId: number): Promise<MyResponse> {
     const ret: MyResponse = { isSuccess: false, message: 'undefined' };
     const queryStr = `INSERT INTO post set title=?, content=?, written_at=?, writer_id=?, room_id=?`;
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {
@@ -35,7 +36,7 @@ export default class Post {
 
     const queryStr = `SELECT p.id, p.writer_id, p.written_at, p.title, p.content, p.room_id, u.profile_img, u.nickname FROM post p, user u WHERE p.writer_id = u.id AND p.room_id=? ORDER BY id DESC`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
@@ -76,7 +77,7 @@ export default class Post {
     const queryStr = `SELECT p.id, p.writer_id, p.written_at, p.title, p.content, u.nickname, u.profile_img 
     FROM post p, user u WHERE p.writer_id = u.id and p.id = ${postId}`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =

@@ -3,6 +3,7 @@ import Db from './utils/db';
 import { FieldPacket, OkPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
 import { MAX_FEED_LEN } from './config/spec';
+import Database from './utils/database';
 
 const GENERAL_ROOM_ID = 1;
 
@@ -19,7 +20,7 @@ export default class Room {
 
     const queryStr = `SELECT r.id, r.owner_id, r.created_at, r.name, u.nickname FROM room r, user u WHERE r.owner_id = u.id AND r.id!=${GENERAL_ROOM_ID} ORDER BY r.id DESC`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
@@ -51,7 +52,7 @@ export default class Room {
     console.log('createRoom');
     const ret: MyResponse = { isSuccess: false, message: 'undefined' };
     const queryStr = `INSERT INTO room set name=?, owner_id=?, created_at=?`;
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {

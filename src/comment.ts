@@ -3,6 +3,7 @@ import Db from './utils/db';
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
 import { MAX_FEED_LEN } from './config/spec';
+import Database from './utils/database';
 
 export default class Comment {
 
@@ -17,7 +18,7 @@ export default class Comment {
   async createComment(postId: number, content: string): Promise<MyResponse> {
     const ret: MyResponse = { isSuccess: false, message: 'undefined' };
     const queryStr = `INSERT INTO comment set post_id=?, content=?, written_at=?, writer_id=?`;
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {
@@ -38,7 +39,7 @@ export default class Comment {
     WHERE c.writer_id = u.id AND c.post_id = ?
     ORDER BY id DESC`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
