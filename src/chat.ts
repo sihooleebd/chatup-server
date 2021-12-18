@@ -73,7 +73,7 @@ export default class Chat {
 
   async getOrCreateRoom(id: number, counterpartUserId: number): Promise<MyResponse> {
     const roomResponse = await this.getRoom(undefined, id, counterpartUserId);
-    console.log('rooRes', roomResponse);
+    console.log('roomRes', roomResponse);
     if(roomResponse.isSuccess) {
       return roomResponse;
     }
