@@ -51,7 +51,7 @@ export default class Comment {
         writerNickname: r.nickname,
         writerId: r.writer_id,
         writtenAt: r.written_at,
-        content: HTMLHelper.escape(r.content),
+        content: r.content,
         profileImg: r.profile_img
         }))
       }

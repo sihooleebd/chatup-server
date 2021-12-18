@@ -2,7 +2,9 @@ import http from 'http';
 import { Server, Socket } from 'socket.io';
 import corsConfig from './config/cors';
 import MyResponse from './my-response';
+import Database from './utils/database';
 import Db from './utils/db';
+import HTMLHelper from './utils/html';
 
 export default class ChatServer {
   httpServer: http.Server;
@@ -50,11 +52,11 @@ export default class ChatServer {
   async writeMessageToDb(roomId: number, senderId: number, content: string): Promise<MyResponse> {
     const ret: MyResponse = { isSuccess: false, message: 'undefined' };
     const queryStr = `INSERT INTO chat_msg set room_id=?, sender_id=?, sent_at=?, content=?`;
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {
-      const result = await connection.query(queryStr, [roomId, senderId, now, content]);
+      const result = await connection.query(queryStr, [roomId, senderId, now, HTMLHelper.escape(content)]);
       console.log('result');
       console.log(result);
       return { isSuccess: true, message: '' };
