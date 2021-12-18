@@ -16,7 +16,6 @@ export default class ChatServer {
       cors: corsConfig
     });
     this.addServerEventHandler();
-    this.run();
   }
 
   addSocketEventHandler(socket: Socket): void {
