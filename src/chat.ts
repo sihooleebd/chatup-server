@@ -1,6 +1,7 @@
 import { FieldPacket, OkPacket, RowDataPacket } from "mysql2/promise";
 import { MAX_FEED_LEN } from "./config/spec";
 import MyResponse from "./my-response";
+import Database from "./utils/database";
 import Db from "./utils/db";
 import HTMLHelper from "./utils/html";
 
@@ -26,7 +27,7 @@ export default class Chat {
       const ret: MyResponse = {isSuccess: false, message: 'Unknown Error'};
       
     
-      const connection = await Db.getConnection();
+      const connection = await Database.getConnectionPool();
     
       const [rows, fields]: [ Array<RowDataPacket>, Array<FieldPacket>] = await connection.query(query, values);
   
@@ -49,7 +50,7 @@ export default class Chat {
   async createRoom(id: number, counterpartUserId: number): Promise <MyResponse>  {
     const userFirstId = Math.min(id, counterpartUserId);
     const userSecondId = Math.max(id, counterpartUserId);
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const ret: MyResponse = {isSuccess: false, message: 'Unknown Error'};
     const queryCreate = `INSERT INTO chat_room set user_first_id=?, user_second_id=?, created_at=?`;
 
@@ -90,7 +91,7 @@ export default class Chat {
 
     const queryStr = `SELECT id, sender_id, sent_at, content FROM chat_msg WHERE room_id=? ORDER BY id DESC LIMIT 30`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =

@@ -8,6 +8,7 @@ import Base64 from './utils/base64';
 import Auth from './utils/auth';
 import Db from './utils/db';
 import fs from 'fs';
+import Database from './utils/database';
 
 export default class User {
   encryptPassword(rawPassword: string): string {
@@ -34,7 +35,7 @@ export default class User {
     }
     values.push(nickname);
     values.push(id);
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const result = await connection.query(queryStr, values);
@@ -68,7 +69,7 @@ export default class User {
     const ret: MyResponse = { isSuccess: false, message: 'undefined'};
 
     const queryStr = `INSERT INTO user set email=?, nickname=?, password=?, joined_at=?`;
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {
@@ -109,7 +110,7 @@ export default class User {
 
     const queryStr = `SELECT id from user WHERE email=? AND password=?`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
     let jsonStr: string;
 
     try {
@@ -138,7 +139,7 @@ export default class User {
 
     const queryStr = `SELECT nickname, email, profile_img from user WHERE id=?`;
 
-    const connection = await Db.getConnection();
+    const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
