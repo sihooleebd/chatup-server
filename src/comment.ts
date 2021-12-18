@@ -1,8 +1,6 @@
 import MyResponse from './my-response';
-import Db from './utils/db';
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
-import { MAX_FEED_LEN } from './config/spec';
 import Database from './utils/database';
 
 export default class Comment {
@@ -17,12 +15,13 @@ export default class Comment {
 
   async createComment(postId: number, content: string): Promise<MyResponse> {
     const ret: MyResponse = { isSuccess: false, message: 'undefined' };
+    const escapedComment = HTMLHelper.escape(content);
     const queryStr = `INSERT INTO comment set post_id=?, content=?, written_at=?, writer_id=?`;
     const connection = await Database.getConnectionPool();
     const now = new Date();
 
     try {
-      const result = await connection.query(queryStr, [postId, content, now, this.userId]);
+      const result = await connection.query(queryStr, [postId, escapedComment, now, this.userId]);
       console.log('result');
       console.log(result);
       return { isSuccess: true, message: '' };
