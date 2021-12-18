@@ -34,9 +34,7 @@ export default class Room {
         name: HTMLHelper.escape(r.name),
         };
       });
-      
-
-      
+    
       console.log(tmp);
       return {
         isSuccess: true,
