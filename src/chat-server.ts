@@ -31,9 +31,22 @@ export default class ChatServer {
     socket.on('chatMessage', (message: string) => {
       console.log(message);
       console.log(socket.data);
-
-
       const { roomId, connectedUserId} = socket.data;
+      const clients = this.socketIoServer.sockets.adapter.rooms.get(roomId.toString());
+
+      //to get the number of clients in this room
+      const numClients = clients ? clients.size : 0;
+
+      //to just emit the same event to all members of a room
+      this.socketIoServer.to(roomId.toString()).emit('new event', 'Updates');
+      for (const clientId of clients ) {
+          console.log('clientId', clientId);
+          //this is the socket of each client in the room.
+          //const clientSocket = this.socketIoServer.sockets.sockets.get(clientId);
+          //you can do whatever you need with this
+          //clientSocket.leave('Other Room')
+      }
+
 
 
       this.writeMessageToDb(roomId, connectedUserId, message).then( (result) => {
