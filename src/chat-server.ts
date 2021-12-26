@@ -72,7 +72,7 @@ export default class ChatServer {
 
     this.socketIoServer.on('connection', (socket) => {
       console.log('connect client by socket.io');
-
+      console.log('socket ',socket.data);
     this.addSocketEventHandler(socket);
 
     });
