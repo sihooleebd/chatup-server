@@ -37,6 +37,7 @@ export default class ChatServer {
 
 
       this.writeMessageToDb(roomId, connectedUserId, message).then( (result) => {
+        console.log('socket --> ', socket);
         socket.to(roomId.toString()).emit('chatMessage', {
         // socket.emit('chatMessage', {
           message,
