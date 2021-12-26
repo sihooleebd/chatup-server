@@ -105,7 +105,7 @@ export default class Chat {
         content: escapedContent,
         };
       });
-      console.log(tmp);
+      // console.log(tmp);
       return {
         isSuccess: true,
         objects: tmp
