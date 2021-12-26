@@ -3,7 +3,6 @@ import { Server, Socket } from 'socket.io';
 import corsConfig from './config/cors';
 import MyResponse from './my-response';
 import Database from './utils/database';
-import Db from './utils/db';
 import HTMLHelper from './utils/html';
 
 export default class ChatServer {
@@ -26,6 +25,7 @@ export default class ChatServer {
       socket.data.connectedUserId = userId;
 
       console.log('joined ', roomId);
+      
     })
 
     socket.on('chatMessage', (message: string) => {
@@ -73,8 +73,7 @@ export default class ChatServer {
     this.socketIoServer.on('connection', (socket) => {
       console.log('connect client by socket.io');
       console.log('socket ',socket.data);
-    this.addSocketEventHandler(socket);
-
+      this.addSocketEventHandler(socket);
     });
 
 
