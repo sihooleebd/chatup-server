@@ -307,6 +307,7 @@ app.get('/api/chats', (req, res) => {
     
     if(userIdStr!=='' && isNaN(parseInt(userIdStr))) {
       console.log('sus2');
+
       res.status(404).send();
       return;      
     }
