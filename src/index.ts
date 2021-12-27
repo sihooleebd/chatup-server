@@ -12,6 +12,7 @@ import fs from 'fs';
 import Chat from './chat';
 import ChatServer from './chat-server';
 import corsConfig from './config/cors';
+import ChatList from './chatList';
 
 const app = express();
 const port = 8081;
@@ -287,6 +288,45 @@ app.get('/api/chatRooms', (req, res) => {
 
   }
 })
+
+
+
+
+
+
+app.get('/api/chats', (req, res) => {
+  const [id, code] = Auth.authenticate(req.cookies.accessToken);
+  if (code !== 200) {
+    res.status(code).send();
+  } else {
+    const chatList = new ChatList(id);
+    const userIdStr = req.query.userId as string;
+    
+    if(userIdStr!=='' && isNaN(parseInt(userIdStr))) {
+      res.status(404).send();
+      return;      
+    }
+
+    const userId = parseInt(userIdStr) || 1;
+
+    if(userId < 1) {
+      res.status(404).send();
+      return;      
+    }
+    chatList.getChatList(userId).then(function (myResponse: MyResponse) {
+      console.log(myResponse);
+      res.send(myResponse);
+    });
+  }
+});
+
+
+
+
+
+
+
+
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
