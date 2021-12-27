@@ -297,6 +297,7 @@ app.get('/api/chatRooms', (req, res) => {
 app.get('/api/chats', (req, res) => {
   console.log('ChatList asked');
   const [id, code] = Auth.authenticate(req.cookies.accessToken);
+  console.log('id, code', id, code);
   if (code !== 200) {
     console.log('sus1');
     res.status(code).send();
