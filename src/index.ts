@@ -322,6 +322,7 @@ app.get('/api/chats/:userId', (req, res) => {
       res.status(404).send();
       return;      
     }
+    
     chatList.getChatList(userId).then(function (myResponse: MyResponse) {
       console.log(myResponse);
       res.send(myResponse);
