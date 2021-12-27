@@ -298,12 +298,14 @@ app.get('/api/chats', (req, res) => {
   console.log('ChatList asked');
   const [id, code] = Auth.authenticate(req.cookies.accessToken);
   if (code !== 200) {
+    console.log('sus1');
     res.status(code).send();
   } else {
     const chatList = new ChatList(id);
     const userIdStr = req.query.userId as string;
     
     if(userIdStr!=='' && isNaN(parseInt(userIdStr))) {
+      console.log('sus2');
       res.status(404).send();
       return;      
     }
