@@ -306,6 +306,7 @@ app.get('/api/chats/:userId', (req, res) => {
     res.status(code).send();
   } else {
     const chatList = new ChatList(id);
+    console.log('req.query', req.query);
     const userIdStr = req.query.userId as string;
     console.log('userIdStr', userIdStr);
     if(userIdStr!=='' && isNaN(parseInt(userIdStr))) {
