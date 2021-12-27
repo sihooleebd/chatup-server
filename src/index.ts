@@ -304,7 +304,7 @@ app.get('/api/chats', (req, res) => {
   } else {
     const chatList = new ChatList(id);
     const userIdStr = req.query.userId as string;
-    
+    console.log('userIdStr', userIdStr);
     if(userIdStr!=='' && isNaN(parseInt(userIdStr))) {
       console.log('sus2');
 
