@@ -309,7 +309,7 @@ app.get('/api/chats', (req, res) => {
     }
 
     const userId = parseInt(userIdStr) || 1;
-
+    console.log('userId', userId);
     if(userId < 1) {
       res.status(404).send();
       return;      
