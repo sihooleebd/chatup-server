@@ -121,7 +121,7 @@ export default class User {
         ]);
 
       if (rows.length == 0) {
-        return { isSuccess: false, message: 'Unknown User' };
+        return { isSuccess: false, message: 'Wrong email or password. Please check again!' };
       }
 
       return {
