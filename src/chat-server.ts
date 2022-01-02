@@ -20,13 +20,14 @@ export default class ChatServer {
 
 
 
-    
+
     const pubClient = createClient({ socket: {
       host: 'localhost',
       port: 6379
     }});
+    pubClient.connect();
     const subClient = pubClient.duplicate();
-
+    subClient.connect();
     this.socketIoServer.adapter(createAdapter(pubClient, subClient))
     this.addServerEventHandler();
   }
