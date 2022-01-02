@@ -4,6 +4,8 @@ import corsConfig from './config/cors';
 import MyResponse from './my-response';
 import Database from './utils/database';
 import HTMLHelper from './utils/html';
+import { createAdapter } from "@socket.io/redis-adapter";
+import { createClient } from "redis";
 
 export default class ChatServer {
   httpServer: http.Server;
@@ -14,6 +16,15 @@ export default class ChatServer {
     this.socketIoServer = new Server(this.httpServer, {
       cors: corsConfig
     });
+
+
+    const pubClient = createClient({ socket: {
+      host: 'localhost',
+      port: 6379
+    }});
+    const subClient = pubClient.duplicate();
+
+    this.socketIoServer.adapter(createAdapter(pubClient, subClient))
     this.addServerEventHandler();
   }
 
@@ -82,7 +93,7 @@ export default class ChatServer {
   }
 
   addServerEventHandler(): void {
-
+    
     this.socketIoServer.on('connection', (socket) => {
       console.log('connect client by socket.io');
       console.log('socket ',socket.data);
