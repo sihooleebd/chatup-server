@@ -14,7 +14,8 @@ export default class ChatServer {
   constructor() {
     this.httpServer = http.createServer();
     this.socketIoServer = new Server(this.httpServer, {
-      cors: corsConfig
+      cors: corsConfig,
+      path: "/chat/socket.io"
     });
 
 
