@@ -32,6 +32,47 @@ export default class Post {
     }
   }
 
+  async deletePost(postId: number): Promise<MyResponse> {
+    const queryStr = `SELECT p.id, p.writer_id, p.written_at, p.title, p.content, u.nickname, u.profile_img FROM post p, user u WHERE p.writer_id = u.id and p.id = ${postId}`;
+
+    const connection = await Database.getConnectionPool();
+
+    try {
+      const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
+      await connection.query(queryStr);
+      if(rows.length == 0) {
+        return {
+          isSuccess: false, 
+          message: 'No such post!'
+        };
+      }
+      const r = rows[0];
+      if(r.writer_id !== this.userId) {
+        return {
+          isSuccess: false, 
+          message: 'Access Forbidden'
+        };
+      }
+      const deleteQuery = `DELETE FROM post p WHERE p.id = ${postId}`
+      try {
+        const [deleteRows, deleteFields]: [Array<RowDataPacket>, Array<FieldPacket>] =
+        await connection.query(deleteQuery);
+        return {
+          isSuccess: true
+        };
+      } catch(e) {
+        return {
+          isSuccess: false,
+          message: e
+        };
+      }
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+
+  }
+
   async getPostList(roomId: number): Promise<MyResponse> {
 
     const queryStr = `SELECT p.id, p.writer_id, p.written_at, p.title, p.content, p.room_id, u.profile_img, u.nickname FROM post p, user u WHERE p.writer_id = u.id AND p.room_id=? ORDER BY id DESC`;
