@@ -7,6 +7,8 @@
   "scripts": {
     "check-types": "tsc",
     "start": "npm run build && node --es-module-specifier-resolution=node ./dist/index.js",
+    "local-start": "cross-env NODE_ENV=development npm start",
+    "production-start": "cross-env NODE_ENV=production npm start",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check --watch",
     "build": "npm run build:js",
@@ -29,6 +31,8 @@
     "babel-plugin-add-import-extension": "^1.6.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^12.0.3",
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "multer": "^1.4.3",

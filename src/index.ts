@@ -14,11 +14,14 @@ import ChatServer from './chat-server';
 import corsConfig from './config/cors';
 import ChatList from './chatList';
 
+
 const app = express();
 const port = 8081;
 
 const upload = multer({dest:'../storage/temp/'});
 
+console.log("process.env.MY_NAME", process.env.MY_NAME);
+console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 app.use(cookieParser());
 app.use(express.json());
 
@@ -115,6 +118,25 @@ app.get('/api/posts/:postId', (req, res) => {
       return;
     }
     post.getPost(postId).then(function (myResponse: MyResponse) {
+      res.send(myResponse);
+    });
+  }
+});
+
+
+app.delete('/api/posts/:postId', (req, res) => {
+  const [id, code] = Auth.authenticate(req.cookies.accessToken);
+  if (code !== 200) {
+    res.status(code).send();
+  } else {
+    const post = new Post(id);
+    const postId = parseInt(req.params.postId);
+    if(!postId) {
+      res.status(404).send();
+      return;
+    }
+    
+    post.deletePost(postId).then(function (myResponse: MyResponse) {
       res.send(myResponse);
     });
   }
