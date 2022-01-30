@@ -125,11 +125,13 @@ app.get('/api/posts/:postId', (req, res) => {
 
 
 app.delete('/api/posts/:postId', (req, res) => {
+  console.log('post delete requested');
   const [id, code] = Auth.authenticate(req.cookies.accessToken);
   if (code !== 200) {
     res.status(code).send();
   } else {
     const post = new Post(id);
+    console.log('postId', req.params.postId);
     const postId = parseInt(req.params.postId);
     if(!postId) {
       res.status(404).send();

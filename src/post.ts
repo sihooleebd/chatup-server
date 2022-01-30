@@ -33,13 +33,14 @@ export default class Post {
   }
 
   async deletePost(postId: number): Promise<MyResponse> {
-    const queryStr = `SELECT p.id, p.writer_id, p.written_at, p.title, p.content, u.nickname, u.profile_img FROM post p, user u WHERE p.writer_id = u.id and p.id = ${postId}`;
+    console.log('postid', postId);
+    const queryStr = `SELECT writer_id FROM post WHERE id = ?`;
 
     const connection = await Database.getConnectionPool();
 
     try {
       const [rows, fields]: [Array<RowDataPacket>, Array<FieldPacket>] =
-      await connection.query(queryStr);
+      await connection.query(queryStr, [postId]);
       if(rows.length == 0) {
         return {
           isSuccess: false, 
@@ -53,10 +54,11 @@ export default class Post {
           message: 'Access Forbidden'
         };
       }
-      const deleteQuery = `DELETE FROM post p WHERE p.id = ${postId}`
+      const deleteQuery = `DELETE FROM post WHERE id = ?`
+
       try {
         const [deleteRows, deleteFields]: [Array<RowDataPacket>, Array<FieldPacket>] =
-        await connection.query(deleteQuery);
+        await connection.query(deleteQuery, [postId]);
         return {
           isSuccess: true
         };
