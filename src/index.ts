@@ -13,6 +13,7 @@ import Chat from './chat';
 import ChatServer from './chat-server';
 import corsConfig from './config/cors';
 import ChatList from './chatList';
+import { slackAlerter } from './utils/slackAlert';
 
 
 const app = express();
@@ -44,6 +45,7 @@ app.post('/api/signUp', (req, res) => {
     .then(function (myResponse: MyResponse) {
       res.send(myResponse);
     });
+    slackAlerter(`${nickname} - ${email} just joined chatup!`);
 });
 app.post('/api/signIn', (req, res) => {
   const user = new User();
