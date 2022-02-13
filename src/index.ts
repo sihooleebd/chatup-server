@@ -44,8 +44,11 @@ app.post('/api/signUp', (req, res) => {
     .create(email, nickname, password)
     .then(function (myResponse: MyResponse) {
       res.send(myResponse);
+      if(myResponse.isSuccess) {
+        slackAlerter(`${nickname} - ${email} just joined chatup!`);
+
+      }
     });
-    slackAlerter(`${nickname} - ${email} just joined chatup!`);
 });
 app.post('/api/signIn', (req, res) => {
   const user = new User();
