@@ -1,8 +1,6 @@
 import MyResponse from './my-response';
-import Db from './utils/db';
 import { FieldPacket, OkPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
-import { MAX_FEED_LEN } from './config/spec';
 import Database from './utils/database';
 
 const GENERAL_ROOM_ID = 1;

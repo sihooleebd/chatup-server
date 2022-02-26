@@ -1,8 +1,8 @@
-import express, { json, response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import User from './user';
 import MyResponse from './my-response';
-import cookieParser, { signedCookie } from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import Auth from './utils/auth';
 import Post from './post';
 import Comment from './comment';

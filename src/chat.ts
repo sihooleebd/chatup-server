@@ -1,5 +1,4 @@
 import { FieldPacket, OkPacket, RowDataPacket } from "mysql2/promise";
-import { MAX_FEED_LEN } from "./config/spec";
 import MyResponse from "./my-response";
 import Database from "./utils/database";
 import Db from "./utils/db";

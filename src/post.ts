@@ -1,5 +1,4 @@
 import MyResponse from './my-response';
-import Db from './utils/db';
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import HTMLHelper from './utils/html';
 import { MAX_FEED_LEN } from './config/spec';
