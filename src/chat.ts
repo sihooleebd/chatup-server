@@ -88,7 +88,7 @@ export default class Chat {
     }
 
 
-    const queryStr = `SELECT id, sender_id, sent_at, content FROM chat_msg WHERE room_id=? ORDER BY id DESC LIMIT 30`;
+    const queryStr = `SELECT id, sender_id, sent_at, content FROM chat_msg WHERE room_id=? ORDER BY id DESC LIMIT 50`;
 
     const connection = await Database.getConnectionPool();
 
