@@ -1,12 +1,8 @@
-import e, { response } from 'express';
-import dbConfig from './config/db';
 import MyResponse from './my-response';
-import * as mysql from 'mysql2/promise';
 import crypto from 'crypto';
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import Base64 from './utils/base64';
 import Auth from './utils/auth';
-import Db from './utils/db';
 import fs from 'fs';
 import Database from './utils/database';
 
