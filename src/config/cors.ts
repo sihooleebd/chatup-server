@@ -1,4 +1,4 @@
-const whiteList = ['http://localhost:1234','https://chatup.mcjunon.com'];
+const whiteList = ['http://localhost:1234','https://chatup.benjaminlee.kr'];
 
 const corsConfig = {
   origin: whiteList,
