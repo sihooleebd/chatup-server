@@ -29,10 +29,14 @@ export default class ChatServer {
     const p1 = pubClient.connect();
     const subClient = pubClient.duplicate();
     const p2 = pubClient.connect();
+    console.log("people", p1, p2)
     Promise.allSettled([p1,p2]).then(() => {
-      this.socketIoServer.adapter(createAdapter(pubClient, subClient))
+      const adapter = createAdapter(pubClient, subClient)
+      console.log('adapter', adapter)
+      this.socketIoServer.adapter(adapter);
       this.addServerEventHandler();
     })
+    console.log('Promise Settled')
   }
 
   addSocketEventHandler(socket: Socket): void {
