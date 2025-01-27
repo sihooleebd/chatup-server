@@ -113,5 +113,6 @@ export default class ChatServer {
   run(): void {
     const port = 8082;
     this.httpServer.listen(port);
+    console.log('chat server started')
   }
 }
