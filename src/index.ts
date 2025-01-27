@@ -11,7 +11,7 @@ import multer from 'multer';
 import fs from 'fs';
 import Chat from './chat';
 import ChatServer from './chat-server';
-import corsConfig from './config/cors';
+import corsConfig, { whiteList } from './config/cors';
 import ChatList from './chatList';
 import { slackAlerter } from './utils/slackAlert';
 
@@ -55,10 +55,24 @@ app.post('/api/signIn', (req, res) => {
   const email = req.body.email || '';
   const password = req.body.pw || '';
   console.log(req.body);
+  
+
+  const origin = req.headers.origin;
+  let cookieDomain = '';
+  
+  if(origin && whiteList.includes(origin)){
+    cookieDomain = new URL(origin).hostname;
+  }
+  
+  console.log('origin', origin);
+  console.log('cookie domain', cookieDomain)
 
   user.auth(email, password).then(function (myResponse: MyResponse) {
     console.log("myResponse", myResponse);
-    res.cookie('accessToken', myResponse.message, { httpOnly: true });
+    res.cookie('accessToken', myResponse.message, { 
+      httpOnly: true, 
+      sameSite: 'none', 
+      domain: cookieDomain });
     res.send(myResponse);
   });
 });
