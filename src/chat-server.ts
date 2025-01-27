@@ -28,7 +28,7 @@ export default class ChatServer {
     }});
     const p1 = pubClient.connect();
     const subClient = pubClient.duplicate();
-    const p2 = pubClient.connect();
+    const p2 = subClient.connect();
     console.log("people", p1, p2)
     Promise.allSettled([p1,p2]).then(() => {
       const adapter = createAdapter(pubClient, subClient)
