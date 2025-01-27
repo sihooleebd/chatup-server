@@ -5,16 +5,18 @@
 //   host: "127.0.0.1",
 // };
 
+import { getEnv } from "./env";
+
 
 
 // export default dbConfig;
 
 
 const dbConfig = {
-  username: "benjamin",
-  password: "ubUntUSerVer1357!",
-  database: "chatup",
-  host: "192.168.50.102",
+  username: getEnv('USERNAME','string'),
+  password: getEnv('PASSWORD','string'),
+  database: getEnv('DATABASE','string'),
+  host: getEnv('HOST','string'),
 };
 
 

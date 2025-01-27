@@ -4,6 +4,9 @@ const envFilePath = `${path.resolve()}/.env/${process.env.NODE_ENV}.env`;
 
 dotenv.config({ path: envFilePath });
 
+console.log('envFilePath', envFilePath);
+console.log('env', process.env);
+
 export function getEnv(name:string, type: 'string'|'number'|'boolean') {
   const val = process.env[name];
   if(val===undefined) return null;
