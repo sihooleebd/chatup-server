@@ -17,6 +17,10 @@ export default class Auth {
       console.log("reges doesn't match");
       return [0, 400];
     }
+    if(accessToken==='Unknown User') {
+      console.log('weird access token')
+      return [0, 400];
+    }
     const [email64, id64, validator64] = accessToken.split('.');
     const email = Base64.decodeUrlSafeBase64(email64);
     const id = Number(Base64.decodeUrlSafeBase64(id64)) || 0;

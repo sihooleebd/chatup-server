@@ -56,23 +56,10 @@ app.post('/api/signIn', (req, res) => {
   const password = req.body.pw || '';
   console.log(req.body);
   
-
-  const origin = req.headers.origin;
-  let cookieDomain = '';
-  
-  if(origin && whiteList.includes(origin)){
-    cookieDomain = new URL(origin).hostname;
-  }
-  
-  console.log('origin', origin);
-  console.log('cookie domain', cookieDomain)
-
   user.auth(email, password).then(function (myResponse: MyResponse) {
     console.log("myResponse", myResponse);
     res.cookie('accessToken', myResponse.message, { 
-      httpOnly: true, 
-      sameSite: 'none', 
-      domain: cookieDomain });
+      httpOnly: true });
     res.send(myResponse);
   });
 });
@@ -379,7 +366,7 @@ app.get('/api/chats/:userId', (req, res) => {
 
 
 
-
+console.log("ENV",process.env)
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
